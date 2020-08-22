@@ -17,17 +17,6 @@ router.post('/signup', (req, res) => {
 
     userInfo.password = hash;
 
-    // db('users').add(userInfo).returning('userId')
-    //     .then(([id]) => {
-    //         db('users').where({ userId: id }).first()
-    //             .then(user => {
-    //                 res.status(201).json(user);
-    //             })
-    //     })
-    //     .catch(error => {
-    //         res.status(500).json({ message: "Something went wrong while trying to create your user", error: error.message });
-    //     })
-
     Users.add(userInfo)
         .then(user => {
             res.status(201).json({ data: user });
