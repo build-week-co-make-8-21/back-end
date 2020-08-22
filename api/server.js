@@ -10,6 +10,8 @@ server.use(express.json());
 
 server.use('/api/issues', protected, issuesRouter);
 server.use('/', authRouter);
+const usersRouter = require('../users/users-router.js');
+server.use('/api/users', usersRouter);
 
 
 server.get('/', (req, res) => {
