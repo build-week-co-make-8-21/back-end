@@ -42,7 +42,7 @@ Base URL for Deployed API:
 |title | string | yes | no | Title of issue |
 |description | string | yes | no | Description of issue |
 |imageURL | string | no | no | Optional image url of issue |
-|categoryId | integer | no | no | Foreign key references __ (?)
+|categoryId | integer | no | no | Foreign key references categoryId (?)
 |userId | integer | yes | no | Foreign key references userId |
 
 ## **Categories**
