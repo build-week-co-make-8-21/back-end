@@ -17,7 +17,10 @@ module.exports = {
     },
     migrations: {
       directory: './data/migrations'
-    }
+    },
+    seeds: {
+      directory: './data/seeds'
+    },
   },
 
   production: {
@@ -29,7 +32,10 @@ module.exports = {
     },
     migrations: {
       directory: './data/migrations'
-    }
+    },
+    seeds: {
+      directory: './database/seeds'
+    },
   }
 
 };

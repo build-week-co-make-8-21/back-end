@@ -1,7 +1,7 @@
 {
   "name": "back-end",
   "version": "1.0.0",
-  "description": "",
+  "description": "Base URL for Deployed API:",
   "main": "index.js",
   "scripts": {
     "server": "nodemon index.js",
