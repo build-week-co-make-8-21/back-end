@@ -12,7 +12,6 @@ exports.up = function(knex) {
         tbl.string('description', 500).notNullable();
         tbl.string('imageURL');
         tbl.integer('categoryId');
-        tbl.integer('userId').notNullable();
     })
     .createTable('categories', tbl => {
         tbl.increments('categoryId');

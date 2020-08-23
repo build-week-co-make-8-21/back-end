@@ -5,7 +5,9 @@ module.exports = {
     findById,
     add,
     update,
-    remove
+    remove,
+    addComment,
+    findCommentsFromIssue
 }
 
 function find() {
@@ -40,4 +42,24 @@ function remove(id) {
                 return "ERROR";
             }
         });
+};
+
+function addComment(id, comment) {
+    comment.issueId = id;
+
+    return db('comments').insert(comment).returning('commentId')
+        .then(([ids]) => {
+            return db('issues')
+            .join('comments', 'issues.issueId', "=", 'comments.issueId')
+            .select('issues.title as issueTitle', 'comments.commentId', 'comments.comment')
+            .where({ 'comments.commentId': ids })
+            .first();
+        });
+};
+
+function findCommentsFromIssue(id) {
+    return db('issues')
+        .join('comments', 'issues.issueId', "=", 'comments.issueId')
+        .select('issues.title as issueTitle', 'comments.commentId', 'comments.comment')
+        .where({ 'issues.issueId': id })
 };

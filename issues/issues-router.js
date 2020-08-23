@@ -1,6 +1,9 @@
 const router = require('express').Router();
 
 const Issues = require('./issues-model.js');
+const commentRouter = require('./comments/comments-router.js');
+
+router.use('/comments', commentRouter);
 
 router.get('/', (req, res) => {
     Issues.find()
@@ -59,6 +62,31 @@ router.delete('/:id', (req, res) => {
         .catch(error => {
             res.status(500).json({ message: "Something went wrong while removing this issue", error: error.message });
         })
+})
+
+router.get('/:id/comments', (req, res) => {
+    const id = req.params.id;
+
+    Issues.findCommentsFromIssue(id)
+        .then(comments => {
+            res.status(200).json(comments);
+        })
+        .catch(error => {
+            res.status(500).json({ message: "Something went wrong while retreiving this comments", error: error.message });
+        })
+});
+
+router.post('/:id/comments', (req, res) => {
+    const id = req.params.id;
+    const newComment = req.body;
+
+    Issues.addComment(id, newComment)
+        .then(comment => {
+            res.status(201).json(comment);
+        })
+        .catch(error => {
+            res.status(500).json({ message: "Something went wrong while adding this comment", error: error.message });
+        });
 })
 
 module.exports = router;
