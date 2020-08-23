@@ -51,3 +51,294 @@ Run on local host: localhost:3000
 |------|------|------|------|------|
 |categoryId | integer | yes | yes | Category id |
 |categoryName | string | yes | yes | Category name |
+
+## **Login**
+If you need to login in before you make a POST request to add a new user with the signup form, you can use the following login info:
+|Username | Password | 
+|------|------|
+|test | pass123 |
+
+## **Requests and Returns**
+**POST /signup**
+Request Body: what is required to enter into the body of Postman or into the signup form. 
+>NOTE: Each username must be unique, we cannot have a repeating username in the database.
+```
+{
+    "username": "ryan",
+    "password": "pass456"
+}
+```
+Returns:
+```
+{
+    "data": {
+        "userId": 8,
+        "username": "ryan",
+        "password": "$2a$08$iS2T720CBab5mKBtOoAee.blOB0StON0VFUmWaRppzWlyERmpXIq6"
+    }
+}
+
+```
+
+**POST /login**
+Request Body:
+```
+{
+    "username": "ryan",
+    "password": "pass456"
+}
+```
+
+Returns:
+```
+{
+    "message": "Welcome, ryan",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJ5YW4iLCJpYXQiOjE1OTgyMDg1MTYsImV4cCI6MTU5ODI5NDkxNn0.DbKCOERt2jNfYb3anBKv-PbHGxCmle7O2-_hwlqwYCg"
+}
+```
+
+**POST /api/issues**
+Request Body:
+```
+    {
+        "title": "backyard bbq",
+        "description": "everyone is invited to our house on Satuday at 12pm for a BBQ!",
+        "imageURL": null,
+        "categoryId": 2,
+        "userId": 8
+    }
+```
+Returns:
+```
+{
+    "issueId": 2,
+    "title": "backyard bbq",
+    "description": "everyone is invited to our house on Satuday at 12pm for a BBQ!",
+    "imageURL": null,
+    "categoryId": 2,
+    "userId": 8
+}
+```
+
+**POST /api/issues/:id/comments**
+Request Body: the id in the post request url should match the id you write into the request body (localhost:3000/api/issues/1/comments)
+```
+{
+    "comment": "Thank you for your commitment to our neighborhood",
+    "issueId": 1
+}
+```
+Returns:
+```
+{
+    "issueTitle": "lawn sale",
+    "commentId": 1,
+    "comment": "Thank you for your commitment to our neighborhood"
+}
+```
+
+**GET /api/users**
+Returns:
+```
+[
+    {
+        "userId": 1,
+        "username": "test"
+    },
+    {
+        "userId": 2,
+        "username": "hailey"
+    },
+    {
+        "userId": 5,
+        "username": "james"
+    },
+    {
+        "userId": 6,
+        "username": "amelia"
+    },
+    {
+        "userId": 7,
+        "username": "jill"
+    },
+    {
+        "userId": 8,
+        "username": "ryan"
+    }
+]
+```
+
+**GET /api/users/:id**
+Returns:
+```
+{
+    "userId": 2,
+    "username": "hailey",
+    "password": "$2a$08$7cksjUzlYoZZ0Xi/.WkQi.iStQWKVg.OY0NX7/ZpuwzH.yVbHEFNq"
+}
+```
+
+**GET /api/issues**
+Returns:
+```
+[
+    {
+        "issueId": 1,
+        "title": "lawn sale",
+        "description": "please contain your lawn sales",
+        "imageURL": null,
+        "categoryId": 2,
+        "userId": 1
+    },
+    {
+        "issueId": 2,
+        "title": "backyard bbq",
+        "description": "everyone is invited to our house on Satuday at 12pm for a BBQ!",
+        "imageURL": null,
+        "categoryId": 2,
+        "userId": 9
+    }
+]
+```
+
+**GET /api/issues/:id**
+Returns:
+```
+{
+    "issueId": 2,
+    "title": "backyard bbq",
+    "description": "everyone is invited to our house on Satuday at 12pm for a BBQ!",
+    "imageURL": null,
+    "categoryId": 2,
+    "userId": 9
+}
+```
+
+**GET /api/issues/:id/comments**
+Returns:
+```
+[
+    {
+        "issueTitle": "lawn sale",
+        "commentId": 1,
+        "comment": "Thank you for your commitment to our neighborhood"
+    },
+    {
+        "issueTitle": "lawn sale",
+        "commentId": 2,
+        "comment": "It's great to share and re-use!"
+    }
+]
+```
+
+**GET /api/issues/comments**
+Returns:
+```
+[
+    {
+        "commentId": 1,
+        "comment": "Thank you for your commitment to our neighborhood",
+        "issueId": 1
+    },
+    {
+        "commentId": 2,
+        "comment": "It's great to share and re-use!",
+        "issueId": 1
+    },
+    {
+        "commentId": 3,
+        "comment": "Please bring your own meats and veggies to grill",
+        "issueId": 2
+    }
+]
+```
+
+**GET /api/issues/comments/:id**
+Returns:
+```
+{
+    "commentId": 2,
+    "comment": "It's great to share and re-use!",
+    "issueId": 1
+}
+```
+
+**PUT /api/users/:id**
+Request Body:
+```
+{
+    "username" : "jim",
+    "password": "pass456"
+}
+```
+
+Returns:
+```
+{
+    "message": "User updated successfully"
+}
+```
+
+**PUT /api/issues/:id**
+Request Body:
+```
+    {
+        "issueId": 1,
+        "title": "lawn sale",
+        "description": "please contain your lawn sales to only your own lawn",
+        "imageURL": null,
+        "categoryId": 2,
+        "userId": 1
+    }
+```
+Returns:
+```
+{
+    "issueId": 1,
+    "title": "lawn sale",
+    "description": "please contain your lawn sales to only your own lawn",
+    "imageURL": null,
+    "categoryId": 2,
+    "userId": 1
+}
+```
+
+**PUT /api/issues/comments/:id**
+Request Body:
+```
+    {
+        "commentId": 1,
+        "comment": "Thank you for your commitment to our community"
+    }
+ ```
+
+ Returns:
+ ```
+ {
+    "commentId": 1,
+    "comment": "Thank you for your commitment to our community",
+    "issueId": 1
+}
+ ```
+
+ **DELETE /api/issues/:id**
+ Returns:
+ ```
+ "Successfully Removed"
+ ```
+
+ **DELETE /api/issues/comments/:id**
+Returns:
+```
+{
+    "message": "Successfully Removed"
+}
+```
+
+ **DELETE /api/users/:id**
+ Returns:
+ ```
+ {
+    "Removed": "user with id: 9"
+}
+ ```
