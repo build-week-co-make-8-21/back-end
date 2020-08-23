@@ -18,12 +18,12 @@ Run on local host: localhost:3000
 |GET | /api/issues/:id | get issue by id | Y |
 |GET | /api/issues/:id/comments | get comments of an issue by id | Y|
 |GET | /api/issues/comments | get all comments | Y |
-|GET | /api/issues/comments/:id | get specific comment (correct?)| Y |
+|GET | /api/issues/comments/:id | get specific comment | Y |
 |PUT | /api/users/:id | update a specific user by id | Y |
 |PUT | /api/issues/:id | update a specific issue by id | Y|
-|PUT | /api/comments/:id | update a specific comment by id | Y |
+|PUT | /api/issues/comments/:id | update a specific comment by id | Y |
 |DELETE | /api/issues/:id | delete a specific issue by id | Y |
-|DELETE | /api/comments/:id | delete a specific comment by id | Y |
+|DELETE | /api/issues/comments/:id | delete a specific comment by id | Y |
 |DELETE | /api/users/:id | delete a specific user by id | Y |
 
 ## **Table Requirements**
