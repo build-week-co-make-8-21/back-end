@@ -51,3 +51,56 @@ Run on local host: localhost:3000
 |------|------|------|------|------|
 |categoryId | integer | yes | yes | Category id |
 |categoryName | string | yes | yes | Category name |
+
+## **Login**
+If you need to login in before you make a POST request to add a new user with the signup form, you can use the following login info:
+|Username | Password | 
+|------|------|
+|test | pass123 |
+
+## **Requests and Returns**
+**POST /signup**
+
+Request Body: what is required to enter into the body of Postman or into the signup form. 
+>NOTE: Each username must be unique, we cannot have a repeating username in the database.
+```
+{
+    "username": "ryan",
+    "password": "pass456"
+}
+```
+Returns:
+```
+{
+    "data": {
+        "userId": 8,
+        "username": "ryan",
+        "password": "$2a$08$iS2T720CBab5mKBtOoAee.blOB0StON0VFUmWaRppzWlyERmpXIq6"
+    }
+}
+
+```
+
+**POST /login**
+
+Request Body:
+```
+{
+    "username": "ryan",
+    "password": "pass456"
+}
+```
+
+Returns:
+```
+{
+    "message": "Welcome, ryan",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJ5YW4iLCJpYXQiOjE1OTgyMDg1MTYsImV4cCI6MTU5ODI5NDkxNn0.DbKCOERt2jNfYb3anBKv-PbHGxCmle7O2-_hwlqwYCg"
+}
+```
+
+**POST /api/issues**
+
+Request Body:
+
+Returns:
