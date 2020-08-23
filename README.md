@@ -2,13 +2,14 @@
 ## Build Week, August 2020
 
 Base URL for Deployed API: 
+Run on local host: localhost:3000
 
 ## **Endpoints**
 
 | Request | URL | Description | Requires Token |
 |----------|----------|----------|----------|
 |POST | /signup | register a new user | N |
-|POST | /login | login an existing user | Y |
+|POST | /login | login an existing user | N |
 |POST | /api/issues | add a new issue | Y |
 |POST | /api/issues/:id/comments | add a new comment to a specific issue | Y|
 |GET | /api/users | get all users | Y |
