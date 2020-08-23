@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const bcrypt = require('bcryptjs');
 
 const Users = require("./users-model");
 
@@ -35,6 +36,12 @@ router.put('/:id', (req, res) => {
     Users.findById(id)
         .then(user => {
             if(user) {
+                const rounds = process.env.BCRYPT_ROUNDS || 8;
+
+                const hash = bcrypt.hashSync(changes.password, rounds);
+
+                changes.password = hash;
+
                 Users.update(changes, id)
                     .then(() => {
                         res.status(200).json({ message: "User updated successfully"})

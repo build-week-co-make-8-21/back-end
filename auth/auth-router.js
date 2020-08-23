@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const router = require('express').Router();
 
 const Users = require("../users/users-model");
+const { isValid } = require('../users/users-service');
 
 const db = require('../data/db-config.js');
 const signToken = require('./signToken.js');
@@ -10,19 +11,23 @@ const signToken = require('./signToken.js');
 router.post('/signup', (req, res) => {
     const userInfo = req.body;
 
-    const rounds = process.env.BCRYPT_ROUNDS || 8;
+    if(isValid(userInfo)) {
+        const rounds = process.env.BCRYPT_ROUNDS || 8;
 
-    const hash = bcrypt.hashSync(userInfo.password, rounds);
+        const hash = bcrypt.hashSync(userInfo.password, rounds);
+        
+        userInfo.password = hash;
 
-    userInfo.password = hash;
-
-    Users.add(userInfo)
-        .then(user => {
-            res.status(201).json({ data: user });
-        })
-        .catch(error => {
-            res.status(500).json({ message: "Something went wrong while trying to create your user", error: error.message })
-        })
+        Users.add(userInfo)
+            .then(user => {
+                res.status(201).json({ data: user });
+            })
+            .catch(error => {
+                res.status(500).json({ message: "Something went wrong while trying to create your user", error: error.message })
+            });
+    } else {
+        res.status(400).json({ message: "Please provide a username and password"});
+    }
 });
 
 router.post('/login', (req, res) => {
