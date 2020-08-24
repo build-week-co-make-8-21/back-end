@@ -24,8 +24,10 @@ module.exports = {
   },
 
   production: {
-    client: 'pg',
-    connection: pg,
+    client: 'sqlite3',
+    connection: {
+      filename: './data/dbCoMake.db3'
+    },
     pool: {
       min: 2,
       max: 10
