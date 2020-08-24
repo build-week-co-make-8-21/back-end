@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const pg = process.env.DATABASE_URL || "postgressql://postgres@localhost/auth";
+const pg = process.env.DB_ENV || "postgressql://postgres@localhost/auth";
 
 module.exports = {
 
