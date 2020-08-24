@@ -8,7 +8,7 @@ const { isValid } = require('../users/users-service');
 const db = require('../data/db-config.js');
 const signToken = require('./signToken.js');
 
-router.post('/signup', (req, res) => {
+router.post('/signup', validateUser, doesUserExist, (req, res) => {
     const userInfo = req.body;
 
     if(isValid(userInfo)) {
@@ -41,12 +41,38 @@ router.post('/login', (req, res) => {
                 res.status(200).json({ message: `Welcome, ${loginInfo.username}`, token: token})
             }
             else {
-                res.status(401).json({ message: "Incorrect login" });
+                res.status(401).json({ message: "Username and/or password incorrect" });
             }
         })
         .catch(error => {
             res.status(500).json({ message: "Something went wrong while trying to log you in", error: error.message });
         })
 });
+
+function validateUser(req, res, next) {
+    if(req.body.username === undefined || req.body.password === undefined) {
+        res.status(400).json({ message: "Username or password missing" });
+    }
+    else {
+        next();
+    }
+};
+
+function doesUserExist(req, res, next) {
+    const username = req.body.username;
+
+    db('users').where({ username }).first()
+        .then(user => {
+            if(user) {
+                res.status(401).json({ message: `The username ${username}, is taken please login with this account or signin` });
+            }
+            else {
+                next();
+            }
+        })
+        .catch(error => {
+            res.status(500).json({ message: "Something went wrong while adding this user", error: error.message });
+        });
+};
 
 module.exports = router;

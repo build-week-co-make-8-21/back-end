@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
         });
 });
 
-router.post('/', (req, res) => {
+router.post('/', validateIssueInput, (req, res) => {
     const issue = req.body;
 
     Issues.add(issue)
@@ -27,7 +27,7 @@ router.post('/', (req, res) => {
         });
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', validateIssueId, (req, res) => {
     const id = req.params.id;
 
     Issues.findById(id)
@@ -39,7 +39,7 @@ router.get('/:id', (req, res) => {
         });
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', validateIssueId, (req, res) => {
     const id = req.params.id;
     const changes = req.body;
 
@@ -52,7 +52,7 @@ router.put('/:id', (req, res) => {
         })
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', validateIssueId, (req, res) => {
     const id = req.params.id;
 
     Issues.remove(id)
@@ -64,7 +64,7 @@ router.delete('/:id', (req, res) => {
         })
 })
 
-router.get('/:id/comments', (req, res) => {
+router.get('/:id/comments', validateIssueId, (req, res) => {
     const id = req.params.id;
 
     Issues.findCommentsFromIssue(id)
@@ -76,7 +76,7 @@ router.get('/:id/comments', (req, res) => {
         })
 });
 
-router.post('/:id/comments', (req, res) => {
+router.post('/:id/comments', validateIssueId, validateCommentInput, (req, res) => {
     const id = req.params.id;
     const newComment = req.body;
 
@@ -87,6 +87,43 @@ router.post('/:id/comments', (req, res) => {
         .catch(error => {
             res.status(500).json({ message: "Something went wrong while adding this comment", error: error.message });
         });
-})
+});
+
+function validateIssueId(req, res, next) {
+    Issues.findById(req.params.id)
+        .then(issue => {
+            if(issue) {
+                next();
+            }
+            else {
+                res.status(404).json({ message: "Could not find this issue, please make sure this is a valid issue id" });
+            }
+        })
+        .catch(error => {
+            res.status(500).json({ message: "Something went wrong while retreiving this issue", error: error.message });
+        });
+};
+
+function validateIssueInput(req, res, next) {
+    const issue = req.body;
+
+    if(issue.title === undefined || issue.description === undefined) {
+        res.status(404).json({ message: "Please add a valid title and/or description" });
+    }
+    else {
+        next();
+    }
+};
+
+function validateCommentInput(req, res, next) {
+    const comment = req.body;
+
+    if(comment.comment === undefined) {
+        res.status(404).json({ message: "Please add a valid commment" });
+    }
+    else {
+        next();
+    }
+};
 
 module.exports = router;

@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
         });
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', validCommentId, (req, res) => {
     const id = req.params.id;
 
     Comments.findById(id)
@@ -24,7 +24,7 @@ router.get('/:id', (req, res) => {
         });
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', validCommentId, (req, res) => {
     const id = req.params.id;
     const changes = req.body;
 
@@ -37,7 +37,7 @@ router.put('/:id', (req, res) => {
         });
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', validCommentId, (req, res) => {
     const id = req.params.id;
 
     Comments.remove(id)
@@ -48,5 +48,20 @@ router.delete('/:id', (req, res) => {
             res.status(500).json({ message: "Something went wrong while removing this comment", error: error.message });
         });
 });
+
+function validCommentId(req, res, next) {
+    Comments.findById(req.params.id)
+        .then(comment => {
+            if(comment) {
+                next();
+            }
+            else {
+                res.status(404).json({ message: "Could not find this comment, please make sure this is a valid comment id" });
+            }
+        })
+        .catch(error => {
+            res.status(500).json({ message: "Something went wrong while retreiving this comment", error: error.message });
+        });
+};
 
 module.exports = router;
