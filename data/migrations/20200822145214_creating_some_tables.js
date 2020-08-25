@@ -15,7 +15,6 @@ exports.up = function(knex) {
         tbl.string('imageURL');
         tbl.integer('categoryId');
         tbl.string('username')
-            .notNullable()
             .references('username')
             .inTable('users')
             .onUpdate('CASCADE')
