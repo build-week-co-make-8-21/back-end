@@ -33,15 +33,16 @@ router.post('/signup', validateUser, doesUserExist, (req, res) => {
 router.post('/login', (req, res) => {
     const loginInfo = req.body;
 
-    db('users').where({ username: loginInfo.username }).first()
+
+    db('users').where(function() { this.where({ username: loginInfo.username }).orWhere({ email: loginInfo.username })}).first()
         .then(user => {
             if(user && bcrypt.compareSync(loginInfo.password, user.password)) {
                 const token = signToken(user);
 
-                res.status(200).json({ message: `Welcome, ${loginInfo.username}`, token: token})
+                res.status(200).json({ message: `Welcome, ${user.username}`, token: token})
             }
             else {
-                res.status(401).json({ message: "Username and/or password incorrect" });
+                res.status(401).json({ message: "Username/Email and/or password incorrect" });
             }
         })
         .catch(error => {
@@ -50,8 +51,11 @@ router.post('/login', (req, res) => {
 });
 
 function validateUser(req, res, next) {
-    if(req.body.username === undefined || req.body.password === undefined) {
-        res.status(400).json({ message: "Username or password missing" });
+    if(req.body.username === undefined || req.body.email === undefined) {
+        res.status(400).json({ message: "Username/Email missing" });
+    }
+    else if(req.body.password === undefined) {
+        res.status(400).json({ message: "Please enter a password" });
     }
     else {
         next();
