@@ -11,11 +11,16 @@ module.exports = {
 }
 
 function find() {
-    return db('issues');
-};
+    return db('issues')
+    .join("users", "issues.username", "=", "users.username")    
+    .select("issues.issueId", "issues.title", "issues.description", "issues.imageURL", "issues.categoryId", "users.username", "users.userId")
+    .orderBy("issues.issueId")
+}; 
 
 function findById(id) {
-    return db('issues').where({ issueId: id }).first();
+    return db('issues').where({ issueId: id }).first()
+    .join("users", "issues.username", "=", "users.username")    
+    .select("issues.issueId", "issues.title", "issues.description", "issues.imageURL", "issues.categoryId", "users.username", "users.userId");
 };
 
 function add(issue) {
@@ -60,6 +65,6 @@ function addComment(id, comment) {
 function findCommentsFromIssue(id) {
     return db('issues')
         .join('comments', 'issues.issueId', "=", 'comments.issueId')
-        .select('issues.title as issueTitle', 'comments.commentId', 'comments.comment')
+        .select('issues.title as issueTitle', 'comments.commentId', 'comments.comment',)
         .where({ 'issues.issueId': id })
 };
