@@ -5,6 +5,8 @@ exports.up = function(knex) {
         tbl.increments('userId');
         tbl.string('username', 100).notNullable().unique();
         tbl.string('password', 100).notNullable();
+        tbl.string('email', 100).notNullable().unique();
+        tbl.string('phoneNumber').unique();
     })
     .createTable('issues', tbl => {
         tbl.increments('issueId');
@@ -12,6 +14,12 @@ exports.up = function(knex) {
         tbl.string('description', 500).notNullable();
         tbl.string('imageURL');
         tbl.integer('categoryId');
+        tbl.string('username')
+            .notNullable()
+            .references('username')
+            .inTable('users')
+            .onUpdate('CASCADE')
+            .onDelete('CASCADE');
     })
     .createTable('categories', tbl => {
         tbl.increments('categoryId');

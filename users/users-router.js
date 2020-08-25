@@ -43,8 +43,8 @@ router.put('/:id', (req, res) => {
                 changes.password = hash;
 
                 Users.update(changes, id)
-                    .then(() => {
-                        res.status(200).json({ message: "User updated successfully"})
+                    .then(updated => {
+                        res.status(200).json({ message: "User updated successfully", updated})
                     })
             } else {
                 res.status(404).json({ message: "Could not find the specified user" })
