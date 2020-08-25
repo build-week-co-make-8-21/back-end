@@ -41,7 +41,7 @@ Run on local host: localhost:3000
 |username | string | yes | yes | User's username |
 |password | string | yes | no| User's password |
 |email | string | yes | yes | User's email must be unique|
-|phone number | string | no | yes | Optional phone number |
+|phoneNumber | string | no | yes | Optional phone number |
 
 
 ## **Issues**
