@@ -12,8 +12,9 @@ module.exports = {
 
 function find() {
     return db('issues')
-    .join("users", "issues.username", "=", "users.username")    
-    .select("issues.issueId", "issues.title", "issues.description", "issues.imageURL", "issues.categoryId", "users.username", "users.userId")
+    .join("users", "issues.username", "=", "users.username")
+    .join("categories", "issues.issueId", "=", "categories.categoryId")    
+    .select("issues.issueId", "issues.title", "issues.description", "issues.imageURL", "issues.categoryId", "users.username", "users.userId", "categories.categoryName")
     .orderBy("issues.issueId")
 }; 
 
