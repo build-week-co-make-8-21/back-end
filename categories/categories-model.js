@@ -49,6 +49,6 @@ function remove(id) {
 function findIssuesByCategory(id) {
     return db("categories")
         .join("issues", "categories.categoryId", "=", "issues.categoryId")
-        .select("categories.categoryName", "issues.issueId", "issues.title", "issues.description")
+        .select("categories.categoryName", "issues.issueId", "issues.title", "issues.description", "issues.imageURL", "issues.username")
         .where({ "categories.categoryId": id })
 };
