@@ -3,7 +3,7 @@ const router = require('express').Router();
 const Categories = require('./categories-model');
 const issuesRouter = require('../issues/issues-router');
 
-router.use('./issues', issuesRouter);
+router.use('/issues', issuesRouter);
 
 router.get('/', (req, res) => {
     Categories.find()
@@ -35,11 +35,11 @@ router.post('/', (req, res) => {
     const category = req.body;
 
     Categories.add(category)
-        .then(category => {
+       .then(category => {
             res.status(201).json(category);
         })
         .catch(err => {
-            res.status(500).json({ message: "Something went wrong while posting this category", err:err.message });
+            res.status(500).json({ message: "Category already exists", err:err.message });
         });
 });
 
@@ -83,5 +83,15 @@ router.get('/:id/issues', (req, res) => {
             res.status(500).json({ message: "Could not find issues under specified category"});
         });
 });
+
+// function checkIfCategoryExists(req, res, next) {
+//     const category = req.body;
+
+//     if(category) {
+//         return res.status(204).json({message: category})
+//     } else {
+//         next();
+//     }
+// };
 
 module.exports = router;
