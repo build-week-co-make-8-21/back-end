@@ -19,7 +19,7 @@ function find() {
 
 function findById(id) {
     return db('issues').where({ issueId: id }).first()
-    .join("categories", "categories.categoryId", "=", "issues.issueId")      
+    .join("categories", "categories.categoryId", "=", "issues.categoryId")      
     .select("issues.issueId", "issues.title", "issues.description", "issues.imageURL", "issues.categoryId", "categories.categoryName");
 };
 
