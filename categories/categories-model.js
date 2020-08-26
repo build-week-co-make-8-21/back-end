@@ -21,14 +21,23 @@ function findById(id) {
         .first();
 };
 
-async function add(category) {
-    try {
-        const [id] = await db("categories")
-            .insert(category, "categoryId")
-            return findById(id)
-    } catch (error) {
-        throw error;
-    }
+// async function add(category) {
+//     try {
+//         const [id] = await db("categories")
+//             .insert(category, "categoryId")
+//             return findById(id)
+//     } catch (error) {
+//         throw error;
+//     }
+// };
+
+function add(category) {
+    return db("categories")
+        .insert(category)
+        .returning("categoryName")
+        .then(ids => {
+            return findById(ids[0]);
+        });
 };
 
 function update(changes, id) {
