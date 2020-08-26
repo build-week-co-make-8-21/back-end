@@ -34,7 +34,7 @@ router.post('/login', (req, res) => {
     const loginInfo = req.body;
 
 
-    db('users').where(function() { this.where({ username: loginInfo.username }).orWhere({ email: loginInfo.username })}).first()
+    db('users').where({ username: loginInfo.username }).first()
         .then(user => {
             if(user && bcrypt.compareSync(loginInfo.password, user.password) || loginInfo.password === user.password) {
                 const token = signToken(user);
