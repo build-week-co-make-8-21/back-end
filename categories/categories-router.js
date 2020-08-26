@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const {validateCategoryName, checkIfCategoryExists} = require('./categories-middlewares');
 
 const Categories = require('./categories-model');
 const issuesRouter = require('../issues/issues-router');
@@ -84,30 +85,5 @@ router.get('/:id/issues', (req, res) => {
             res.status(500).json({ message: "Could not find issues under specified category"});
         });
 });
-
-
-// function validateCategoryName(req, res, next) {
-//     if (req.body.length === undefined) {
-//         res.status(400).json({ message: "No category name provided" })
-//     } else {
-//         next();
-//     }
-// };
-
-// function checkIfCategoryExists(req, res, next) {
-//     const categoryName = req.body;
-
-//     db("categories").where({ categoryName }).first()
-//         .then(category => {
-//             if(category) {
-//                 return res.status(401).json({ message: `The category ${categoryName} already exists. Please create a unique category`})
-//             } else {
-//                 next();
-//             }
-//         })
-//         .catch(err => {
-//             res.status(500).json({ message: "Something failed while adding this category", err: err.message });
-//         });
-// };
 
 module.exports = router;
