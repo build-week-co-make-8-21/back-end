@@ -2,6 +2,7 @@
 ## Build Week, August 2020
 
 Base URL for Deployed API: https://bw-co-make-8-21.herokuapp.com/
+
 Run on local host: localhost:3000
 
 ## **Endpoints**
@@ -52,7 +53,7 @@ Run on local host: localhost:3000
 |description | string | yes | no | Description of issue |
 |imageURL | string | no | no | Optional image url of issue |
 |categoryId | integer | no | no | Foreign key references categoryId |
-|username | string | yes | no | Foreign key references username in users tbl |
+|username | string | no | no | Foreign key references username in users tbl |
 
 ## **Comments**
 |Name | Type | Required | Unique | Notes |
@@ -68,10 +69,10 @@ Run on local host: localhost:3000
 |categoryName | string | yes | yes | Category name |
 
 ## **Login**
-If you need to login in before you make a POST request to add a new user with the signup form, you can use the following login info:
-|Username | Password | 
-|------|------|
-|test | pass123 |
+If you need to login before you make a POST request to add a new user with the signup form, you can use the following login info:
+|Username | Password | Email |
+|------|------|------|
+|test | pass123 | test@gmail.com|
 
 ## **Requests and Returns**
 **POST /signup**

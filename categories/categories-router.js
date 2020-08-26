@@ -1,7 +1,9 @@
 const router = require('express').Router();
+const {validateCategoryName, checkIfCategoryExists} = require('./categories-middlewares');
 
 const Categories = require('./categories-model');
 const issuesRouter = require('../issues/issues-router');
+const db = require('../data/db-config');
 
 router.use('/issues', issuesRouter);
 
@@ -83,15 +85,5 @@ router.get('/:id/issues', (req, res) => {
             res.status(500).json({ message: "Could not find issues under specified category"});
         });
 });
-
-// function checkIfCategoryExists(req, res, next) {
-//     const category = req.body;
-
-//     if(category) {
-//         return res.status(204).json({message: category})
-//     } else {
-//         next();
-//     }
-// };
 
 module.exports = router;
