@@ -9,7 +9,7 @@ module.exports = (user) => {
     const secret = "dontbesuspicious";
 
     const options = {
-        expiresIn: '1d'
+        expiresIn: '7d'
     }
 
     return jwt.sign(payload, secret, options);

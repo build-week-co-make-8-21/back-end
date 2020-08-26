@@ -12,17 +12,15 @@ module.exports = {
 
 function find() {
     return db('issues')
-    .join("users", "issues.username", "=", "users.username")
     .join("categories", "categories.categoryId", "=", "issues.categoryId")    
-    .select("issues.issueId", "issues.title", "issues.description", "issues.imageURL", "issues.categoryId", "categories.categoryName", "users.username", "users.email", )
+    .select("issues.issueId", "issues.title", "issues.description", "issues.imageURL", "issues.categoryId", "categories.categoryName")
     .orderBy("issues.issueId")
 }; 
 
 function findById(id) {
     return db('issues').where({ issueId: id }).first()
-    .join("users", "issues.username", "=", "users.username")
-    .join("categories", "categories.categoryId", "=", "issues.issueId")      
-    .select("issues.issueId", "issues.title", "issues.description", "issues.imageURL", "issues.categoryId", "categories.categoryName", "users.username", "users.email");
+    .join("categories", "categories.categoryId", "=", "issues.categoryId")      
+    .select("issues.issueId", "issues.title", "issues.description", "issues.imageURL", "issues.categoryId", "categories.categoryName");
 };
 
 function add(issue) {
