@@ -22,31 +22,31 @@ const server = require('../../api/server.js');
     
                 expect(comments.status).toBe(200);
             });
-            // it('get /api/issues/comments/id', async () => {
-            //     const res = await request(server).post('/login').send({
-            //         "username": "hailey",
-            //         "password": "pass123"
-            //     })
-            //     const usertoken = res.body.token;
+            it('get /api/issues/comments/id', async () => {
+                const res = await request(server).post('/login').send({
+                    "username": "hailey",
+                    "password": "pass123"
+                })
+                const usertoken = res.body.token;
     
-            //     const comments = await request(server).get('/api/issues/comments/1').set({ Authorization: usertoken });
+                const comments = await request(server).get('/api/issues/comments/1').set({ Authorization: usertoken });
     
-            //     expect(comments.status).toBe(200);
-            // })
+                expect(comments.status).toBe(200);
+            })
         });
-        // describe('post', () => {
-        //     it('post /api/issues/id/comments', async () => {
-        //         const res = await request(server).post('/login').send({
-        //             "username": "hailey",
-        //             "password": "pass123"
-        //         })
-        //         const usertoken = res.body.token;
+        describe('post', () => {
+            it('post /api/issues/id/comments', async () => {
+                const res = await request(server).post('/login').send({
+                    "username": "hailey",
+                    "password": "pass123"
+                })
+                const usertoken = res.body.token;
 
-        //         const comment = await request(server).post('/api/issues/1/comments').send({
-        //             "comment": "new comment"
-        //         }).set({ Authorization: usertoken });
+                const comment = await request(server).post('/api/issues/1/comments').send({
+                    "comment": "new comment"
+                }).set({ Authorization: usertoken });
 
-        //         expect(comment.status).toBe(201);
-        //     });
-        // });
+                expect(comment.status).toBe(201);
+            });
+        });
     });
