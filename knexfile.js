@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const pg = process.env.DATABASE_URL || "postgressql://postgres@localhost/auth";
+const pgConnection = process.env.DATABASE_URL || "postgresql://postgres@localhost/dbCoMake";
 
 module.exports = {
 
@@ -26,12 +26,14 @@ module.exports = {
   production: {
     client: 'sqlite3',
     connection: {
-      filename: './data/dbCoMake.db3'
+      filename: './data/prodDbCoMake.db3'
     },
+    // in video, he did client pg, connection:pgConnection
     pool: {
       min: 2,
       max: 10
     },
+    useNullAsDefault: true,
     migrations: {
       directory: './data/migrations'
     },
