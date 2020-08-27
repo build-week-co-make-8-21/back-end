@@ -68,7 +68,7 @@ function doesUserExist(req, res, next) {
     db('users').where({ username }).first()
         .then(user => {
             if(user) {
-                res.status(401).json({ message: `The username ${username}, is taken please login with this account or signin` });
+                res.status(401).json({ message: `The username ${username} is taken, please login with this account or signin` });
             }
             else {
                 next();
