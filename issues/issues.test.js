@@ -16,18 +16,18 @@ describe('issues', () => {
             expect(issues.status).toBe(200);
             expect(issues.body).toHaveLength(3);
         });
-    //     it('get /api/issues/id', async () => {
-    //         const res = await request(server).post('/login').send({
-    //             "username": "hailey",
-    //             "password": "pass123"
-    //         })
-    //         const usertoken = res.body.token;
+        it('get /api/issues/id', async () => {
+            const res = await request(server).post('/login').send({
+                "username": "hailey",
+                "password": "pass123"
+            })
+            const usertoken = res.body.token;
 
-    //         const issue = await request(server).get('/api/issues/1').set({ Authorization: usertoken });
+            const issue = await request(server).get('/api/issues/1').set({ Authorization: usertoken });
 
-    //         expect(issue.status).toBe(200);
-    //         expect(issue.type).toBe('application/json');
-    //     });
+            expect(issue.status).toBe(200);
+            expect(issue.type).toBe('application/json');
+        });
     });
     describe('post', () => {
         it('post /api/issues', async () => {
