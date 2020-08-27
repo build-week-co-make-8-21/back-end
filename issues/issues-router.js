@@ -107,8 +107,8 @@ function validateIssueId(req, res, next) {
 function validateIssueInput(req, res, next) {
     const issue = req.body;
 
-    if(issue.title === undefined || issue.description === undefined) {
-        res.status(404).json({ message: "Please add a valid title and/or description" });
+    if(issue.title === undefined || issue.description === undefined || issue.categoryId === undefined) {
+        res.status(404).json({ message: "Title, description, and/or categoryId are missing" });
     }
     else {
         next();
