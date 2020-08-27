@@ -36,21 +36,22 @@ module.exports = {
       directory: './data/migrations'
     },
     seeds: {
-      directory: './database/seeds'
+      directory: './data/seeds'
     },
   },
 
-  test: {
+  testing: {
     client: "sqlite3",
     connection: {
-      filename: "./data/dbCoMake.db3",
+      filename: "./data/testdb.db3",
     },
     useNullAsDefault: true,
-    pool: {
-      afterCreate: (conn, done) => {
-        conn.run("PRAGMA foreign_keys = ON", done);
-      }
-    }
+    migrations: {
+      directory: './data/migrations'
+    },
+    seeds: {
+      directory: './data/seeds'
+    },
   }
 
 };
