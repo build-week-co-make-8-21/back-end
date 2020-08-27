@@ -7,7 +7,7 @@ const db = require('../data/db-config.js');
 describe('server', () => {
     describe('testing environment is testing', () => {
         it('should use testing env', () => {
-            expect(process.env.NODE_ENV).toBe('test')
+            expect(process.env.NODE_ENV).toBe('testing')
         })
     })
     describe('GET /', () => {

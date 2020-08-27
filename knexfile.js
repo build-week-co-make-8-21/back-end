@@ -40,7 +40,7 @@ module.exports = {
     },
   },
 
-  test: {
+  testing: {
     client: "sqlite3",
     connection: {
       filename: "./data/dbCoMake.db3",
